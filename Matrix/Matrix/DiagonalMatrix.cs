@@ -5,17 +5,11 @@ namespace Matrix
     public class DiagonalMatrix<T> : SquareMatrix<T>
     {
         /// <summary>
-        /// Array for data storage
-        /// </summary>
-        private readonly T[] array;
-
-        /// <summary>
         /// ctor
         /// </summary>
         /// <param name="matrixSize">size of array</param>
         public DiagonalMatrix(int matrixSize) : base(matrixSize)
         {
-            array = new T[matrixSize];
         }
 
         /// <summary>
@@ -40,7 +34,7 @@ namespace Matrix
 
                 if(i == j)
                 {
-                    return array[i];
+                    return Array[i];
                 }
 
                 return default(T);
@@ -59,10 +53,10 @@ namespace Matrix
                 
                 if(i == j)
                 {
-                    if (!array[i].Equals(value))
+                    if (!Array[i].Equals(value))
                     {
-                        var oldValue = array[i];
-                        array[i] = value;
+                        var oldValue = Array[i];
+                        Array[i] = value;
                         OnChangeIndex(new IndexChangerEventArgs<T>(i, j, oldValue, value));
                     }                    
                 }

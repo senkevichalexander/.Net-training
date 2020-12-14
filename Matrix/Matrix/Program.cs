@@ -34,6 +34,8 @@ namespace Matrix
             squareMatrix[0, 1] = 7;
 
             GetMatrix(squareMatrix);
+
+            Console.ReadKey();
         }
 
         private static void SetMatrixByOne(SquareMatrix<int> squareMatrix, int size)

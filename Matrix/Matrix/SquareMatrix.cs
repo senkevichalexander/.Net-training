@@ -7,12 +7,12 @@ namespace Matrix
         /// <summary>
         /// Array for data storage
         /// </summary>
-        private readonly T[] array;
-        
+        protected T[] Array { get; set; }
+
         /// <summary>
         /// Size of the matrix
         /// </summary>
-        public int Size { get; }
+        protected int Size { get; }
 
         /// <summary>
         /// ctor
@@ -20,13 +20,13 @@ namespace Matrix
         /// <param name="matrixSize">size</param>
         public SquareMatrix(int matrixSize)
         {
-            if(matrixSize < 0)
+            if (matrixSize < 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             Size = matrixSize;
-            array = new T[matrixSize * matrixSize];
+            Array = new T[matrixSize * matrixSize];
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Matrix
         /// <param name="i">row</param>
         /// <param name="j">column</param>
         /// <returns>values of the matrix</returns>
-        public virtual T this [int i, int j]
+        public virtual T this[int i, int j]
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Matrix
                     throw new ArgumentOutOfRangeException();
                 }
 
-                return array[Size * i + j];
+                return Array[Size * i + j];
             }
             set
             {
@@ -63,12 +63,12 @@ namespace Matrix
                     throw new ArgumentOutOfRangeException();
                 }
 
-                if(!array[Size * i + j].Equals(value))
+                if (!Array[Size * i + j].Equals(value))
                 {
-                    var oldValue = array[Size * i + j];
-                    array[Size * i + j] = value;
+                    var oldValue = Array[Size * i + j];
+                    Array[Size * i + j] = value;
                     OnChangeIndex(new IndexChangerEventArgs<T>(i, j, oldValue, value));
-                }                
+                }
             }
         }
 
