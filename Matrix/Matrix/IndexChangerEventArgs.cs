@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Matrix
 {
@@ -13,23 +11,15 @@ namespace Matrix
 
         public int IndexJ { get; }
 
-        public T OldValue { get; }
-
-        public T NewValue { get; }
-
         /// <summary>
-        /// ctor
+        /// Constructor 
         /// </summary>
         /// <param name="indexI">row index</param>
         /// <param name="indexJ">column index</param>
-        /// <param name="oldValue">old value of  the element</param>
-        /// <param name="newValue">new value of the element</param>
-        public IndexChangerEventArgs(int indexI, int indexJ, T oldValue, T newValue)
+        public IndexChangerEventArgs(int indexI, int indexJ)
         {
             IndexI = indexI;
             IndexJ = indexJ;
-            OldValue = oldValue;
-            NewValue = newValue;
         }
     }
 }

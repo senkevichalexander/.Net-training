@@ -12,10 +12,10 @@ namespace Matrix
         /// <summary>
         /// Size of the matrix
         /// </summary>
-        protected int Size { get; }
+        public int Size { get; private set; }
 
         /// <summary>
-        /// ctor
+        /// Constructor
         /// </summary>
         /// <param name="matrixSize">size</param>
         public SquareMatrix(int matrixSize)
@@ -26,11 +26,43 @@ namespace Matrix
             }
 
             Size = matrixSize;
-            Array = new T[matrixSize * matrixSize];
+            Array = new T[Size * Size];
         }
 
         /// <summary>
-        /// Creator and Reader for index of matrix
+        /// Represent martix in string format
+        /// </summary>
+        /// <returns>matrix in string</returns>
+        public override string ToString()
+        {
+            var str = "";
+
+            for (int i = 0; i < Size; i++)
+            {
+                for (int j = 0; j < Size; j++)
+                {
+                    str += this[i, j];
+                }
+
+                str += "\n";
+            }
+
+            return str;
+        }
+
+        /// <summary>
+        /// Check data is valid
+        /// </summary>
+        /// <param name="i">row</param>
+        /// <param name="j">column</param>
+        /// <returns>check</returns>
+        protected bool IsSizeNotValid(int i, int j)
+        {
+            return ((i < 0 || i >= Size) && (j < 0 || j >= Size));
+        }
+
+        /// <summary>
+        /// Get and set matrix indexes
         /// </summary>
         /// <param name="i">row</param>
         /// <param name="j">column</param>
@@ -39,12 +71,7 @@ namespace Matrix
         {
             get
             {
-                if (i < 0 || i >= Size)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
-                if (j < 0 || j >= Size)
+                if (IsSizeNotValid(i,j))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -53,21 +80,15 @@ namespace Matrix
             }
             set
             {
-                if (i < 0 || i >= Size)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
-                if (j < 0 || j >= Size)
+                if (IsSizeNotValid(i, j))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
 
                 if (!Array[Size * i + j].Equals(value))
                 {
-                    var oldValue = Array[Size * i + j];
                     Array[Size * i + j] = value;
-                    OnChangeIndex(new IndexChangerEventArgs<T>(i, j, oldValue, value));
+                    OnChangeIndex(new IndexChangerEventArgs<T>(i, j));
                 }
             }
         }
@@ -78,7 +99,7 @@ namespace Matrix
         public event EventHandler<IndexChangerEventArgs<T>> IndexChanger;
 
         /// <summary>
-        /// Method for set and get matrix
+        /// Method for set matrix
         /// </summary>
         /// <param name="e"></param>
         protected virtual void OnChangeIndex(IndexChangerEventArgs<T> e) => IndexChanger?.Invoke(this, e);

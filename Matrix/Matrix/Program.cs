@@ -4,67 +4,56 @@ namespace Matrix
 {
     public class Program
     {
+        private const int _size = 10;
+        private const int _newValue = 7;
+        private const int _number = 8;
+
         static void Main()
         {
-            SquareMatrix<int> squareMatrix = new SquareMatrix<int>(3);
+            SquareMatrix<int> squareMatrix = new SquareMatrix<int>(_size);
 
-            SetMatrixByOne(squareMatrix, 3);
+            SetMatrix(squareMatrix, _size, _number);
 
-            GetMatrix(squareMatrix);
+            Console.WriteLine(squareMatrix.ToString());
 
-            DiagonalMatrix<int> diagonalMatrix = new DiagonalMatrix<int>(3);
+            DiagonalMatrix<int> diagonalMatrix = new DiagonalMatrix<int>(_size);
 
-            SetMatrixByOne(diagonalMatrix, 3);
+            SetMatrix(diagonalMatrix, _size, _number);
 
-            GetMatrix(diagonalMatrix);
+            Console.WriteLine(diagonalMatrix.ToString());
 
             squareMatrix.IndexChanger += Reaction;
             squareMatrix.IndexChanger += delegate (object sender, IndexChangerEventArgs<int> e)
             {
-                Console.WriteLine(" Value [{0},{1}] is changed from {2} to {3} from anonymous method", e.IndexI, e.IndexJ, e.OldValue, e.NewValue);
+                Console.WriteLine(" Value [{0},{1}] is changed from anonymous method", e.IndexI, e.IndexJ);
 
             };
 
             squareMatrix.IndexChanger += (object sender, IndexChangerEventArgs<int> e) =>
             {
-                Console.WriteLine(" Value [{0},{1}] is changed from {2} to {3} from lambda", e.IndexI, e.IndexJ, e.OldValue, e.NewValue);
+                Console.WriteLine(" Value [{0},{1}] is changed from lambda", e.IndexI, e.IndexJ);
 
             };
 
-            squareMatrix[0, 1] = 7;
+            squareMatrix[0, 1] = _newValue;
 
-            GetMatrix(squareMatrix);
-
-            Console.ReadKey();
+            Console.WriteLine(squareMatrix.ToString()); 
         }
 
-        private static void SetMatrixByOne(SquareMatrix<int> squareMatrix, int size)
+        private static void SetMatrix(SquareMatrix<int> squareMatrix, int size, int number)
         {
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
-                    squareMatrix[i, j] = 1;
+                    squareMatrix[i, j] = number;
                 }
-            }
-        }
-
-        private static void GetMatrix(SquareMatrix<int> squareMatrix)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    Console.Write(squareMatrix[i, j] + " ");
-                }
-
-                Console.WriteLine();
             }
         }
 
         private static void Reaction(object sender, IndexChangerEventArgs<int> e)
         {
-            Console.WriteLine(" Value [{0},{1}] is changed from {2} to {3} from method", e.IndexI, e.IndexJ, e.OldValue, e.NewValue);
+            Console.WriteLine(" Value [{0},{1}] is changed", e.IndexI, e.IndexJ);
         }
     }
 }

@@ -5,29 +5,25 @@ namespace Matrix
     public class DiagonalMatrix<T> : SquareMatrix<T>
     {
         /// <summary>
-        /// ctor
+        /// Constructor
         /// </summary>
         /// <param name="matrixSize">size of array</param>
         public DiagonalMatrix(int matrixSize) : base(matrixSize)
         {
+            Array = new T[matrixSize];  
         }
 
         /// <summary>
-        /// Creator and Reader for index of matrix
+        /// Get and set matrix indexes
         /// </summary>
         /// <param name="i">row</param>
         /// <param name="j">column</param>
-        /// <returns>values of the matrix</returns>
+        /// <returns>matrix</returns>
         public override T this[int i, int j]
         {
             get
             {
-                if (i < 0 || i >= Size)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-
-                if (j < 0 || j >= Size)
+                if (IsSizeNotValid(i, j))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -41,23 +37,17 @@ namespace Matrix
             }
             set
             {
-                if (i < 0 || i >= Size)
+                if (IsSizeNotValid(i, j))
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-
-                if (j < 0 || j >= Size)
-                {
-                    throw new ArgumentOutOfRangeException();
-                } 
                 
                 if(i == j)
                 {
                     if (!Array[i].Equals(value))
                     {
-                        var oldValue = Array[i];
                         Array[i] = value;
-                        OnChangeIndex(new IndexChangerEventArgs<T>(i, j, oldValue, value));
+                        OnChangeIndex(new IndexChangerEventArgs<T>(i, j));
                     }                    
                 }
             }
