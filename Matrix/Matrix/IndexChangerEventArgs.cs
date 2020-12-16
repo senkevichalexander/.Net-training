@@ -5,7 +5,7 @@ namespace Matrix
     public class IndexChangerEventArgs<T> : EventArgs
     {
         /// <summary>
-        ///Properties of each matrix element
+        ///Indexes of each matrix element
         /// </summary>
         public int IndexI { get; }
 

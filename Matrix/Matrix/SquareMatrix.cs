@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Matrix
 {
@@ -18,36 +19,48 @@ namespace Matrix
         /// Constructor
         /// </summary>
         /// <param name="matrixSize">size</param>
-        public SquareMatrix(int matrixSize)
+        public SquareMatrix(int matrixSize, Type type)
         {
-            if (matrixSize < 0)
+            if (matrixSize <= 0)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
             Size = matrixSize;
-            Array = new T[Size * Size];
+
+            if (typeof(SquareMatrix<T>) == type)
+            {
+                Array = new T[Size * Size];
+            }
+        }
+        /// <summary>
+        /// Constructor is changed
+        /// </summary>
+        /// <param name="matrixSize">size</param>
+        public SquareMatrix(int matrixSize) : this(matrixSize, typeof(SquareMatrix<T>))
+        {
         }
 
+
         /// <summary>
-        /// Represent martix in string format
+        /// Represents martix in string format
         /// </summary>
         /// <returns>matrix in string</returns>
         public override string ToString()
         {
-            var str = "";
+            StringBuilder sb = new StringBuilder(16);
 
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
                 {
-                    str += this[i, j];
+                    sb.Append(this[i, j]);
                 }
 
-                str += "\n";
+                sb.Append("\n");
             }
 
-            return str;
+            return sb.ToString();
         }
 
         /// <summary>
@@ -71,7 +84,7 @@ namespace Matrix
         {
             get
             {
-                if (IsSizeNotValid(i,j))
+                if (IsSizeNotValid(i, j))
                 {
                     throw new ArgumentOutOfRangeException();
                 }

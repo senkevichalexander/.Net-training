@@ -8,13 +8,13 @@ namespace Matrix
         /// Constructor
         /// </summary>
         /// <param name="matrixSize">size of array</param>
-        public DiagonalMatrix(int matrixSize) : base(matrixSize)
+        public DiagonalMatrix(int matrixSize) : base(matrixSize, typeof(DiagonalMatrix<T>))
         {
             Array = new T[matrixSize];  
         }
 
         /// <summary>
-        /// Get and set matrix indexes
+        /// Get and set matrix size
         /// </summary>
         /// <param name="i">row</param>
         /// <param name="j">column</param>
@@ -37,7 +37,7 @@ namespace Matrix
             }
             set
             {
-                if (IsSizeNotValid(i, j))
+                if (IsSizeNotValid(i, j) && i != j)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -48,7 +48,7 @@ namespace Matrix
                     {
                         Array[i] = value;
                         OnChangeIndex(new IndexChangerEventArgs<T>(i, j));
-                    }                    
+                    } 
                 }
             }
         }

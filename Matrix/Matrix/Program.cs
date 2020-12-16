@@ -9,7 +9,7 @@ namespace Matrix
         private const int _number = 8;
 
         static void Main()
-        {
+        {   
             SquareMatrix<int> squareMatrix = new SquareMatrix<int>(_size);
 
             SetMatrix(squareMatrix, _size, _number);
