@@ -1,22 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Catalog
 {
     public class Book
     {
-        [RegularExpression("^[-,0-9]+$", ErrorMessage = "Number should be in 0 to 9 range")]
-        [ISBNFormat("XXX-X-XX-XXXXXX-X", "XXXXXXXXXXXXX", ErrorMessage = "Format is wrong")]
-        public string ISBN { get; set; }
+        public ISBN ISBN { get; private set; }
 
-        [StringLength(1000, ErrorMessage = "Book name should be less than or equal to 200 characters")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Book name should have one character at least")]
-        public string BookName { get; set; }
+        public string BookName { get; private set; }
         
-        [DataType(DataType.Date)]
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; private set; }
 
-        public List<Author> Authors { get; set; }
+        public List<Author> Authors { get; private set; }
+
+        public Book(string isbn, string bookName, DateTime? publishDate, List<Author> authors)
+        {
+            if(bookName.Length > 1000 || string.IsNullOrEmpty(bookName))
+            {
+                throw new ArgumentException();
+            }
+
+            ISBN = new ISBN(isbn);
+            BookName = bookName;
+            PublishDate = publishDate;
+            Authors = authors;
+        }
+
+        public Book(string isbn, string bookName) : this(isbn, bookName, null, new List<Author>())
+        {
+        }
     }
 }

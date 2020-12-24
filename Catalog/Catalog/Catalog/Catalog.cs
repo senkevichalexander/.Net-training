@@ -1,27 +1,24 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Catalog
 {
     public class Catalog : IEnumerable<Book>
     {
-        public Dictionary<string, Book> BookCatalog { get; private set; }
+        public Dictionary<ISBN, Book> BookCatalog { get; private set; }
+        public int Size { get; }
 
-        public void AddBook(Book book)
+        public Catalog()
         {
-            if(BookCatalog == null)
-            {
-                BookCatalog = new Dictionary<string, Book>();
-            }
+            BookCatalog = new Dictionary<ISBN, Book>();
+        }
 
-            var results = new List<ValidationResult>();
-            var context = new ValidationContext(book);
-
-            if (!BookCatalog.Keys.Any(x => x == book.ISBN.Trim('-')) 
-                && Validator.TryValidateObject(book, context, results, true))
+        public void Add(Book book)
+        {
+            if (!BookCatalog.Keys.Any(item => item.Equals(book.ISBN)
+                 || item.GetHashCode() == book.GetHashCode()))
             {
                 BookCatalog.Add(book.ISBN, book);
             }
@@ -39,23 +36,32 @@ namespace Catalog
 
         public List<Book> GetBooksOrderedByDateDesc()
         {
-            var books = BookCatalog.Select(kvp => kvp.Value);
+            var books = GetBooks();
 
             return books.OrderByDescending(x => x.PublishDate).ToList();
         }
 
         public List<Book> GetBooksByAuthor(Author author)
         {
-            var books = BookCatalog.Select(kvp => kvp.Value);
+            var books = GetBooks();
 
-            return books.Where(b => b.Authors.Any(x => x.FirstName.ToLower() == author.FirstName.ToLower()
-                  && x.LastName.ToLower() == author.LastName.ToLower())).ToList();
-        } 
+            return books.Where(b => DoesAuthorExist(b, author)).ToList();
+        }
 
+        private bool DoesAuthorExist(Book book, Author author)
+        {
+            return book.Authors.Any(x => x.FirstName.ToLower() == author.FirstName.ToLower()
+                  && x.LastName.ToLower() == author.LastName.ToLower());
+        }
+
+        private List<Book> GetBooks()
+        {
+            return BookCatalog.Select(kvp => kvp.Value).ToList();
+        }
 
         public List<Tuple<Author, int>> GetAuthorsWithBookCounts()
         {
-            var books = BookCatalog.Select(kvp => kvp.Value).ToList();
+            var books = GetBooks();
             var authors = new List<Author>();
 
             foreach (var book in books)

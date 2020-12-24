@@ -1,17 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
 
 namespace Catalog
 {
     public class Author
-    {
-        [StringLength(200, ErrorMessage = "Authors first name should be less than or equal to 200 characters")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Authors first name should have one character at least")]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string FirstName { get; set; }
+    {        
+        public string FirstName { get; private set; }
 
-        [StringLength(200, ErrorMessage = "Authors last name should be less than or equal to 200 characters")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Authors last name should have one character at least")]
-        [DisplayFormat(ConvertEmptyStringToNull = false)]
-        public string LastName { get; set; }
+        public string LastName { get; private set; }
+
+        public Author(string firstName, string lastName)
+        {
+            if (firstName.Length > 200 || lastName.Length > 200)
+            {
+                throw new ArgumentException();
+            }
+
+            if(string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                throw new ArgumentException();
+            }
+
+            LastName = lastName;
+            FirstName = firstName;
+        }
     }
 }
