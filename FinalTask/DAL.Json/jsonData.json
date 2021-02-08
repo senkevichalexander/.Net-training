@@ -1,0 +1,17 @@
+ [
+    {
+      "Id": "40543ed8-7965-470d-ae95-b658b2d2899e",
+      "Variety": "TemperatureSensor",
+      "Interval": "1000"
+    },
+    {
+      "Id": "ba23df60-376d-4a2f-a302-40406e8c03ca",
+      "Variety": "PresureSensor",
+      "Interval": "2000"
+    },
+    {
+      "Id": "d8bde18e-23a2-4933-944f-a389c0de9934",
+      "Variety": "MagnecySensor",
+      "Interval": "1000"
+    }
+  ]  

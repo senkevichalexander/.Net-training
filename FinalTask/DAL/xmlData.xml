@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sensors>
+	<sensor>
+		<id>40543ed8-7965-470d-ae95-b658b2d2899e</id>
+		<variety>TemperatureSensor</variety>
+		<interval>1000</interval>
+	</sensor>
+	<sensor>
+		<id>ba23df60-376d-4a2f-a302-40406e8c03ca</id>
+		<variety>PresureSensor</variety>
+		<interval>2000</interval>
+	</sensor>
+	<sensor>
+		<id>d8bde18e-23a2-4933-944f-a389c0de9934</id>
+		<variety>MagnecySensor</variety>
+		<interval>1000</interval>
+	</sensor>
+</sensors>

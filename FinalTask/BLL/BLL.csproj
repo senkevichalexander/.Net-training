@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL.Interfaces\DAL.Interfaces.csproj" />
+    <ProjectReference Include="..\DAL.Models\Models.csproj" />
+    <ProjectReference Include="..\Factory\Factory.csproj" />
+  </ItemGroup>
+
+</Project>

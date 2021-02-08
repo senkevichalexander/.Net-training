@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DAL.Interfaces\DAL.Interfaces.csproj" />
+    <ProjectReference Include="..\DAL.Json\DAL.Json.csproj" />
+    <ProjectReference Include="..\DAL\DAL.Xml.csproj" />
+  </ItemGroup>
+
+</Project>
